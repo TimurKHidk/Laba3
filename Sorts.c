@@ -61,34 +61,6 @@ void read_stack(Stack *s)
     }
 }
 
-// Запись стека в файл
-void write_to_file(Stack *s, const char *filename)
-{
-    FILE *file = fopen(filename, "w");
-    if (!file)
-    {
-        fprintf(stderr, "Ошибка открытия файла %s\n", filename);
-        return;
-    }
-
-    Stack temp;
-    init_stack(&temp);
-
-    while (!is_empty(s))
-    {
-        int value = pop(s);
-        fprintf(file, "%d ", value);
-        push(&temp, value);
-    }
-
-    while (!is_empty(&temp))
-    {
-        push(s, pop(&temp));
-    }
-
-    fclose(file);
-}
-
 // Чтение стека из файла
 void read_stack_from_file(Stack *s, const char *filename)
 {
@@ -280,26 +252,6 @@ void compare_sorting_methods(const char *base_filename, int sizes[], int num_siz
         double time_merge = measure_sort_time(&s2, 2);
 
         printf("Размер: %d, Прямое включение: %.6f с, Слияние: %.6f с\n", sizes[i], time_insertion, time_merge);
-    }
-}
-
-// Вывод стека
-void print_stack(Stack *s)
-{
-    Stack temp;
-    init_stack(&temp);
-
-    while (!is_empty(s))
-    {
-        int value = pop(s);
-        printf("%d ", value);
-        push(&temp, value);
-    }
-    printf("\n");
-
-    while (!is_empty(&temp))
-    {
-        push(s, pop(&temp));
     }
 }
 
